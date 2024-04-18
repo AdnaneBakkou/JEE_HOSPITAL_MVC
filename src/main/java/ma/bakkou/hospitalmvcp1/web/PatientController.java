@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,6 +43,7 @@ public class PatientController {
     }
 
 @GetMapping("/admin/delete")
+@PreAuthorize("hasRole('Role_ADMIN')")
     public String delete(Long id , String keyword , int page){
 patientRepository.deleteById(id);
 return "redirect:/user/index?page="+page+"&keyword="+keyword;
@@ -53,11 +55,15 @@ return "redirect:/user/index?page="+page+"&keyword="+keyword;
         return "index";
     }
     @GetMapping("/admin/formPatients")
+    @PreAuthorize("hasRole('Role_ADMIN')")
+
     public String formPatient(Model model) {
         model.addAttribute("patient", new Patient()); // Ajoute un patient vide pour le binding du formulaire
         return "formPatients";
     }
     @PostMapping("/admin/save")
+    @PreAuthorize("hasRole('Role_ADMIN')")
+
     public String save( Model model , @Valid Patient patient , BindingResult bindingResult, @RequestParam(defaultValue = "") String keyword , @RequestParam(defaultValue = "0") int page){
         if (bindingResult.hasErrors()) return "formPatients";
         patientRepository.save(patient);
@@ -65,6 +71,8 @@ return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
 
     @GetMapping("/admin/editPatient")
+    @PreAuthorize("hasRole('Role_ADMIN')")
+
     public String editPatient(Model model, Long id , String keyword , int page) {
         Patient patient=patientRepository.findById(id).get();
         if (patient==null) throw  new RuntimeException("patient introuvable");

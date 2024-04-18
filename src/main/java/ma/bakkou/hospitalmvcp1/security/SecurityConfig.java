@@ -4,19 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+
 
 @Bean
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(){
@@ -26,30 +33,19 @@ public class SecurityConfig {
 
         );
     }
-
-    @Bean
+@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
-
-
-           httpSecurity.formLogin(Customizer.withDefaults());
-
-
-
-        httpSecurity
-                .authorizeRequests()
-                        .requestMatchers("/login/**","/css/**", "/js/**").permitAll() ;
-        httpSecurity
-                .authorizeRequests()  .requestMatchers("/admin/**","/css/**", "/js/**").hasRole("ADMIN") ;
-
-        httpSecurity
-                .authorizeRequests()  .requestMatchers("/user/**","/css/**", "/js/**").hasRole("USER")  ;
-
-        httpSecurity
-                .authorizeRequests(authorize -> authorize
-                        .anyRequest().authenticated()
-                );
-
-        return httpSecurity.build();
+        return httpSecurity
+                .formLogin(form -> form
+                        .loginPage("/login") // Set the custom login page
+                        .permitAll() // Permit everyone to see the login page. Don't require authentication.
+                )
+                .authorizeHttpRequests(ar->ar.requestMatchers("/webjars/**").permitAll())
+              //  .authorizeHttpRequests(ar->ar.requestMatchers("/deletePatient/**").hasRole("ADMIN"))
+                // .authorizeHttpRequests(ar->ar.requestMatchers("/admin/**").hasRole("ADMIN"))
+                //.authorizeHttpRequests(ar->ar.requestMatchers("/user/**").hasRole("USER"))
+                .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .exceptionHandling(eh->eh.accessDeniedPage("/notAuthorized"))
+                .build();
     }
 }
