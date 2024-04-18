@@ -24,7 +24,7 @@
 
     <div class="container my-3 mb-5">
         <div class="row">
-            <div class="col-md-6">
+            <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="col-md-6">
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">Ajouter un nouveau Patient</h5>

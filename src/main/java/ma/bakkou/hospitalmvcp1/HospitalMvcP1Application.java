@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Date;
 
@@ -22,13 +25,15 @@ public class HospitalMvcP1Application implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
 
-//patientRepository.save(new Patient(null,"adnane",new Date(),false,55));
-  //      patientRepository.save(new Patient(null,"moe",new Date(),false,885));
-    //    patientRepository.save(new Patient(null,"meryem",new Date(),true,102));
+        //patientRepository.save(new Patient(null,"adnane",new Date(),false,55));
+        //      patientRepository.save(new Patient(null,"moe",new Date(),false,885));
+        //    patientRepository.save(new Patient(null,"meryem",new Date(),true,102));
 
 
+    }
 
-
-
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }
