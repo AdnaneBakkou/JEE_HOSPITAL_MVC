@@ -1,4 +1,4 @@
-package ma.bakkou.hospitalmvcp1.entities;
+package ma.bakkou.hospitalmvcp1.security.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

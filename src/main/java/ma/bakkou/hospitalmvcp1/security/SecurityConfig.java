@@ -1,5 +1,6 @@
 package ma.bakkou.hospitalmvcp1.security;
 
+import ma.bakkou.hospitalmvcp1.security.service.UserDetailSerficeImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,15 @@ public class SecurityConfig {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-@Bean
+    @Autowired
+    private UserDetailSerficeImpl userDetailSerficeImpl;
+
+
+
+
+
+
+// @Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource)
     {
         return new JdbcUserDetailsManager(dataSource);
@@ -55,6 +64,7 @@ public class SecurityConfig {
                 // .authorizeHttpRequests(ar->ar.requestMatchers("/admin/**").hasRole("ADMIN"))
                 //.authorizeHttpRequests(ar->ar.requestMatchers("/user/**").hasRole("USER"))
                 .authorizeHttpRequests(ar->ar.anyRequest().authenticated())
+                .userDetailsService(userDetailSerficeImpl)
                 .exceptionHandling(eh->eh.accessDeniedPage("/notAuthorized"))
                 .build();
     }

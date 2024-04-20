@@ -1,6 +1,6 @@
 package ma.bakkou.hospitalmvcp1.repository;
 
-import ma.bakkou.hospitalmvcp1.entities.Patient;
+import ma.bakkou.hospitalmvcp1.security.entities.Patient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
