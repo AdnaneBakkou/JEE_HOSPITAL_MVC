@@ -35,7 +35,7 @@ public class PatientController {
     }
 
 @GetMapping("/admin/delete")
-@PreAuthorize("hasRole('Role_ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
     public String delete(Long id , String keyword , int page){
 patientRepository.deleteById(id);
 return "redirect:/user/index?page="+page+"&keyword="+keyword;
@@ -47,23 +47,23 @@ return "redirect:/user/index?page="+page+"&keyword="+keyword;
         return "index";
     }
     @GetMapping("/admin/formPatients")
-    @PreAuthorize("hasRole('Role_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
 
     public String formPatient(Model model) {
         model.addAttribute("patient", new Patient()); // Ajoute un patient vide pour le binding du formulaire
         return "formPatients";
     }
     @PostMapping("/admin/save")
-    @PreAuthorize("hasRole('Role_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
 
     public String save( Model model , @Valid Patient patient , BindingResult bindingResult, @RequestParam(defaultValue = "") String keyword , @RequestParam(defaultValue = "0") int page){
         if (bindingResult.hasErrors()) return "formPatients";
         patientRepository.save(patient);
-        return "redirect:/admin/index?page="+page+"&keyword="+keyword;
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
-
+//test
     @GetMapping("/admin/editPatient")
-    @PreAuthorize("hasRole('Role_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
 
     public String editPatient(Model model, Long id , String keyword , int page) {
         Patient patient=patientRepository.findById(id).get();

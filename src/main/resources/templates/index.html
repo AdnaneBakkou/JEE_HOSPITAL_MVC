@@ -23,6 +23,7 @@
     </div>
 
     <div class="container my-3 mb-5">
+        <h3 class="text-center">Liste des Services</h3>
         <div class="row">
             <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="col-md-6">
                 <div class="card" style="width: 18rem;">
@@ -38,7 +39,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Gestion des patients</h5>
                         <p class="card-text">Accedez à la page gestion des patients pour modifier supprimer et visualiser les patients ...</p>
-                        <a th:href="@{index}" class="btn btn-primary">GESTION PATIENT </a>
+                        <a th:href="@{/user/index}" class="btn btn-primary">GESTION PATIENT </a>
                     </div>
                 </div>
             </div>
