@@ -1,5 +1,5 @@
 
-Se connecter avec un compte user avec user name meryem (User donc seulement la fonction search)
+Se connecter avec un compte user avec username meryem (User donc seulement la fonction search)
 
 ![image](https://github.com/AdnaneBakkou/JEE_HOSPITAL_MVC/assets/69118882/9b8dbfca-a02b-4800-93d6-3fd242bd0255)
 
